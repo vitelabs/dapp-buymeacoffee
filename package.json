@@ -4,10 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "npm run test-on-nightly",
-    "test-on-release": "./node_modules/.bin/mocha --config ./test/mocharc.release.json",
-    "test-on-beta": "./node_modules/.bin/mocha --config ./test/mocharc.beta.json",
-    "test-on-nightly": "./node_modules/.bin/mocha --config ./test/mocharc.nightly.json",
+    "test": "./node_modules/.bin/mocha --config ./test/mocharc.json",
     "run": "./node_modules/.bin/ts-node "
   },
   "author": "shan@vite.org",
