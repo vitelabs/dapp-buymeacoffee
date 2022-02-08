@@ -1,4 +1,4 @@
-const vite = require('viteshop');
+const vite = require("@vite/vuilder");
 
 export async function mochaGlobalSetup() {
     await vite.startLocalNetwork('beta');

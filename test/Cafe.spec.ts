@@ -1,6 +1,6 @@
 import { describe } from "mocha";
 import { expect } from "chai";
-const vite = require("viteshop");
+const vite = require("@vite/vuilder");
 import config from "./vite.config.json";
 
 let provider: any;
