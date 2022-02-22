@@ -12,7 +12,7 @@ contract Cafe {
 
    uint256 public price = 10**18;
 
-   tti public constant VITE = "tti_5649544520544f4b454e6e40";
+   vitetoken public constant VITE = "tti_5649544520544f4b454e6e40";
 
    event Buy(address from, address to, uint256 num);
 

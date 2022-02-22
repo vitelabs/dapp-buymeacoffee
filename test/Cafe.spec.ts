@@ -1,6 +1,6 @@
-import { describe } from "mocha";
+// import { describe } from "mocha";
 import { expect } from "chai";
-const vite = require("@vite/vuilder");
+const vuilder = require("@vite/vuilder");
 import config from "./vite.config.json";
 
 let provider: any;
@@ -8,14 +8,15 @@ let deployer: any;
 
 describe("test Cafe", () => {
   before(async function() {
-    provider = vite.localProvider();
-    deployer = vite.newAccount(config.networks.local.mnemonic, 0);
-    // console.log('deployer', deployer.address);
+    provider = vuilder.newProvider("http://127.0.0.1:23456");
+    console.log(await provider.request("ledger_getSnapshotChainHeight"));
+    deployer = vuilder.newAccount(config.networks.local.mnemonic, 0, provider);
+    console.log('deployer', deployer.address);
   });
 
   it("test buy coffee", async () => {
     // compile
-    const compiledContracts = await vite.compile("Cafe.solpp");
+    const compiledContracts = await vuilder.compile("Cafe.solpp");
     expect(compiledContracts).to.have.property("Cafe");
 
     // deploy

@@ -15,7 +15,7 @@
     "@types/chai-things": "^0.0.35",
     "@types/mocha": "^9.0.0",
     "@types/node": "^14.6.2",
-    "@vite/vuilder": "git+https://github.com/vitelabs/viteshop.git#feat/linux-compatible",
+    "@vite/vuilder": "git+https://github.com/vitelabs/vuilder.git#feat/subcommand",
     "axios": "^0.21.4",
     "chai": "^4.3.4",
     "chai-like": "^1.1.1",
@@ -31,7 +31,8 @@
     "@vite/vitejs": "^2.3.17",
     "@vite/vitejs-accountblock": "^2.3.17",
     "@vite/vitejs-http": "^2.3.17",
+    "@vite/vitejs-ipc": "^2.3.17",
     "@vite/vitejs-ws": "^2.3.17",
-    "@vite/vitejs-ipc": "^2.3.17"
+    "yargs": "^17.3.1"
   }
 }
