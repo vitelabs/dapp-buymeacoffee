@@ -29,7 +29,6 @@
     "@vite/vitejs-accountblock": "^2.3.17",
     "@vite/vitejs-http": "^2.3.17",
     "@vite/vitejs-ipc": "^2.3.17",
-    "@vite/vitejs-ws": "^2.3.17",
-    "yargs": "^17.3.1"
+    "@vite/vitejs-ws": "^2.3.17"
   }
 }
