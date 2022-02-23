@@ -8,7 +8,7 @@ let deployer: any;
 
 describe("test Cafe", () => {
   before(async function() {
-    provider = vuilder.newProvider("http://127.0.0.1:23456");
+    provider = vuilder.newProvider(config.networks.local.http);
     console.log(await provider.request("ledger_getSnapshotChainHeight"));
     deployer = vuilder.newAccount(config.networks.local.mnemonic, 0, provider);
     console.log('deployer', deployer.address);

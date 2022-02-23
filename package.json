@@ -3,10 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "main": "app.js",
-  "scripts": {
-    "test": "./node_modules/.bin/mocha --config ./test/mocharc.json",
-    "run": "./node_modules/.bin/ts-node "
-  },
+  "scripts": {},
   "author": "shan@vite.org",
   "license": "ISC",
   "devDependencies": {
