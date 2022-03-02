@@ -19,7 +19,7 @@ async function run(): Promise<void> {
   console.log(cafe.address);
 
   // stake quota
-  await deployer.stakeForQuota({beneficiaryAddress: cafe.address, amount:"10001000000000000000000"});
+  // await deployer.stakeForQuota({beneficiaryAddress: cafe.address, amount:"2001000000000000000000"});
 
   return;
 }

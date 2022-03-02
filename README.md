@@ -3,5 +3,14 @@
 # Getting Started
 ```
 npm install
-npm test
+
+# run unit test for test/*.spec.ts
+npx vuilder test
+
+# deploy contract
+# edit scripts/deploy.config.json && run deploy scripts
+npx tsc-node scripts/deploy.ts 
+
+# stake quota for contract(by web-wallet)
+
 ```
