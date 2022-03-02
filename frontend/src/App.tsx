@@ -6,133 +6,11 @@ import Connector from "@vite/connector";
 import { ViteAPI, accountBlock } from "@vite/vitejs";
 import coffeeABI from "./contract/coffee_abi.json";
 import coffeeContract from "./contract/coffee_contract.json";
-import {BuyCoffeeRecords} from "./BuyCoffeeRecords"
+import { BuyCoffeeRecords } from "./BuyCoffeeRecords";
+import { BuyCoffee } from "./BuyCoffee";
+import { UserInfo,User} from "./UserInfo";
 const { HTTP_RPC } = require("@vite/vitejs-http");
 
-class User {
-  address?: string;
-  age: number;
-  uri?: string;
-
-  constructor() {
-    this.age = 0;
-  }
-
-  inc = () => {
-    console.log("inc age before" + this.age);
-    this.age = this.age + 1;
-    console.log("inc age after" + this.age);
-    return this;
-  };
-
-  setUri = (uri: string) => {
-    this.uri = uri;
-  };
-
-  login = (session: any) => {
-    this.address = session.accounts[0];
-  };
-  logout = () => {
-    this.address = undefined;
-    this.uri = undefined;
-  };
-
-  ok = () => {
-    return this.address && true;
-  };
-}
-
-function OnlineUser(props: { user: User; logout: any }) {
-  return (
-    <div>
-      <p>{props.user.address}</p>
-      <button type="button" onClick={props.logout}>
-        Logout
-      </button>
-    </div>
-  );
-}
-
-function OfflineUser(props: { user: User; login: any }) {
-  return (
-    <div>
-      {!props.user.uri && (
-        <button type="button" onClick={props.login}>
-          Connect
-        </button>
-      )}
-
-      {props.user.uri && <QRCode value={props.user.uri} />}
-    </div>
-  );
-}
-
-function UserInfo(props: { user: User; login: any; logout: any }) {
-  if (props.user.address) {
-    return <OnlineUser user={props.user} logout={props.logout} />;
-  }
-  return <OfflineUser user={props.user} login={props.login} />;
-}
-
-// function Sponsor(props: { num: number }) {
-//   return <li>sponsor {props.num} vite</li>;
-// }
-
-class BuyCoffee extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = { num: 1, name: "" };
-  }
-
-  onInputChange = (event: any) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  buy = () => {
-    if (!this.props.user.ok()) {
-      alert("Please Connect App First");
-      return;
-    }
-    this.props.buy(this.state.name, this.state.num);
-  };
-
-  render() {
-    return (
-      <div>
-        <div>buy a coffee</div>
-        {/* <div>
-          <label>
-            Name :
-            <input
-              name="name"
-              type="text"
-              value={this.state.name}
-              onChange={this.onInputChange}
-            />
-          </label>
-        </div> */}
-        <div>
-          <label>
-            Cups :
-            <input
-              name="num"
-              type="number"
-              value={this.state.num}
-              onChange={this.onInputChange}
-            />
-          </label>
-        </div>
-        <div>
-          <button type="button" onClick={this.buy}>
-            Support {this.state.num } VITE
-          </button>
-        </div>
-      </div>
-    );
-  }
-}
 
 type AppProps = {};
 
@@ -160,13 +38,16 @@ class App extends React.Component<AppProps, AppState> {
       connectURI: "",
       user: this.user,
     };
-    
+
     this.contract = { address: coffeeContract.address, abi: coffeeABI };
     this.beneficiaryAddress = window.location.pathname.substring(1);
-    this.provider = new ViteAPI(new HTTP_RPC(coffeeContract.networkHTTP), () => {
-      console.log("vite provider connected");
-    });
-      
+    this.provider = new ViteAPI(
+      new HTTP_RPC(coffeeContract.networkHTTP),
+      () => {
+        console.log("vite provider connected");
+      }
+    );
+
     console.log("app created");
   }
 
@@ -267,7 +148,7 @@ class App extends React.Component<AppProps, AppState> {
 
   render() {
     // let { viteAddress } = useParams();
-    
+
     // console.log("vite address", this.props.match.params.viteAddress);
     // const Wrapper = (props:any) => {
     //   const params = useParams();
@@ -288,7 +169,11 @@ class App extends React.Component<AppProps, AppState> {
             logout={this.logout}
           />
           <BuyCoffee buy={this.buy} user={this.state.user} />
-          <BuyCoffeeRecords address={this.contract.address} abi={this.contract.abi} provider={this.provider} ></BuyCoffeeRecords>
+          <BuyCoffeeRecords
+            address={this.contract.address}
+            abi={this.contract.abi}
+            provider={this.provider}
+          ></BuyCoffeeRecords>
         </header>
       </div>
     );
