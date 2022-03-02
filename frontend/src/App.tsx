@@ -2,9 +2,12 @@ import React from "react";
 import "./App.css";
 import QRCode from "qrcode.react";
 import Connector from "@vite/connector";
-import { accountBlock } from "@vite/vitejs";
+
+import { ViteAPI, accountBlock } from "@vite/vitejs";
 import coffeeABI from "./contract/coffee_abi.json";
 import coffeeContract from "./contract/coffee_contract.json";
+import {BuyCoffeeRecords} from "./BuyCoffeeRecords"
+const { HTTP_RPC } = require("@vite/vitejs-http");
 
 class User {
   address?: string;
@@ -99,7 +102,7 @@ class BuyCoffee extends React.Component<any, any> {
     return (
       <div>
         <div>buy a coffee</div>
-        <div>
+        {/* <div>
           <label>
             Name :
             <input
@@ -109,7 +112,7 @@ class BuyCoffee extends React.Component<any, any> {
               onChange={this.onInputChange}
             />
           </label>
-        </div>
+        </div> */}
         <div>
           <label>
             Cups :
@@ -123,7 +126,7 @@ class BuyCoffee extends React.Component<any, any> {
         </div>
         <div>
           <button type="button" onClick={this.buy}>
-            Support {this.state.num * 2} VITE
+            Support {this.state.num } VITE
           </button>
         </div>
       </div>
@@ -148,6 +151,7 @@ class App extends React.Component<AppProps, AppState> {
   vc: any;
   contract: Contract;
   beneficiaryAddress: string;
+  provider: any;
 
   constructor(props: any) {
     super(props);
@@ -159,6 +163,9 @@ class App extends React.Component<AppProps, AppState> {
     
     this.contract = { address: coffeeContract.address, abi: coffeeABI };
     this.beneficiaryAddress = window.location.pathname.substring(1);
+    this.provider = new ViteAPI(new HTTP_RPC(coffeeContract.networkHTTP), () => {
+      console.log("vite provider connected");
+    });
       
     console.log("app created");
   }
@@ -281,6 +288,7 @@ class App extends React.Component<AppProps, AppState> {
             logout={this.logout}
           />
           <BuyCoffee buy={this.buy} user={this.state.user} />
+          <BuyCoffeeRecords address={this.contract.address} abi={this.contract.abi} provider={this.provider} ></BuyCoffeeRecords>
         </header>
       </div>
     );
