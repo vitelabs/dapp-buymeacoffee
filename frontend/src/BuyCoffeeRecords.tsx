@@ -2,17 +2,20 @@ import { useState, useEffect } from "react";
 import { abi } from "@vite/vitejs";
 import { Buffer } from "buffer";
 
-export function BuyCoffeeRecords(props: {
+type RecordsProps = {
   address: string;
   abi: any[];
   provider: any;
-}) {
+};
+
+export function BuyCoffeeRecords(props: { contract: RecordsProps }) {
   const [events, setEvents] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
-    const provider = props.provider;
-    const contractAbi = props.abi;
-    const address = props.address;
+    const provider = props.contract.provider;
+    const contractAbi = props.contract.abi;
+    const address = props.contract.address;
 
     (async () => {
       const es = await await scanEvents(
@@ -22,7 +25,7 @@ export function BuyCoffeeRecords(props: {
         "0",
         "Buy"
       );
-      if(es){
+      if (es) {
         setEvents(es);
       }
     })();
@@ -30,7 +33,7 @@ export function BuyCoffeeRecords(props: {
     return () => {
       // this now gets called when the component unmounts
     };
-  }, [props]);
+  }, [props.contract, refresh]);
 
   const listItems = events.map(
     (event: {
@@ -44,7 +47,17 @@ export function BuyCoffeeRecords(props: {
   );
   return (
     <div>
-      <p>Total: {events.length}</p>
+      <p>
+        Total: {events.length}{" "}
+        <button
+          type="button"
+          onClick={() => {
+            setRefresh(!refresh);
+          }}
+        >
+          Refresh
+        </button>
+      </p>
       <ul>{listItems}</ul>
     </div>
   );

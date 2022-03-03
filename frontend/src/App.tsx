@@ -21,6 +21,7 @@ type AppState = {
 type Contract = {
   address: string;
   abi: any[];
+  provider: any;
 };
 
 class App extends React.Component<AppProps, AppState> {
@@ -37,15 +38,19 @@ class App extends React.Component<AppProps, AppState> {
       connectURI: "",
       user: this.user,
     };
-
-    this.contract = { address: coffeeContract.address, abi: coffeeABI };
-    this.beneficiaryAddress = window.location.pathname.substring(1);
     this.provider = new ViteAPI(
       new HTTP_RPC(coffeeContract.networkHTTP),
       () => {
         console.log("vite provider connected");
       }
     );
+
+    this.contract = {
+      address: coffeeContract.address,
+      abi: coffeeABI,
+      provider: this.provider,
+    };
+    this.beneficiaryAddress = window.location.pathname.substring(1);
 
     console.log("app created");
   }
@@ -138,13 +143,13 @@ class App extends React.Component<AppProps, AppState> {
     });
 
     console.log(result);
+
     return;
   };
 
   print = (...args: any[]) => {
     console.log(args);
   };
-
   render() {
     // let { viteAddress } = useParams();
 
@@ -168,11 +173,8 @@ class App extends React.Component<AppProps, AppState> {
             logout={this.logout}
           />
           <BuyCoffee buy={this.buy} user={this.state.user} />
-          <BuyCoffeeRecords
-            address={this.contract.address}
-            abi={this.contract.abi}
-            provider={this.provider}
-          ></BuyCoffeeRecords>
+
+          <BuyCoffeeRecords contract={this.contract}></BuyCoffeeRecords>
         </header>
       </div>
     );
