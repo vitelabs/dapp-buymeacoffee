@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import QRCode from "qrcode.react";
+
 import Connector from "@vite/connector";
 
 import { ViteAPI, accountBlock } from "@vite/vitejs";
