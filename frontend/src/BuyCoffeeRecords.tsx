@@ -22,17 +22,15 @@ export function BuyCoffeeRecords(props: {
         "0",
         "Buy"
       );
-      setEvents(es);
+      if(es){
+        setEvents(es);
+      }
     })();
 
     return () => {
       // this now gets called when the component unmounts
     };
   }, [props]);
-
-  if (!events) {
-    return <div></div>;
-  }
 
   const listItems = events.map(
     (event: {
@@ -71,10 +69,7 @@ async function scanEvents(
   });
 
   if (!vmLogs) {
-    return {
-      toHeight: fromHeight,
-      events: [],
-    };
+    return [];
   }
   const eventAbi = abi.find(
     (item: { name: string; type: string }) =>
@@ -86,7 +81,7 @@ async function scanEvents(
   });
 
   if (!events || events.length === 0) {
-    return { toHeight: fromHeight, events: [] };
+    return [];
   }
 
   return events.map((input: any) => {
