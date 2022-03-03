@@ -1,21 +1,20 @@
 import { useState, useEffect } from "react";
 import { abi } from "@vite/vitejs";
-import {Buffer} from 'buffer';
+import { Buffer } from "buffer";
 
 export function BuyCoffeeRecords(props: {
   address: string;
   abi: any[];
   provider: any;
 }) {
-  
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-	const provider = props.provider;
-	const contractAbi = props.abi;
-	const address = props.address;
-  
-	(async () => {
+    const provider = props.provider;
+    const contractAbi = props.abi;
+    const address = props.address;
+
+    (async () => {
       const es = await await scanEvents(
         provider,
         contractAbi,
@@ -31,8 +30,20 @@ export function BuyCoffeeRecords(props: {
     };
   }, [props]);
 
-  const listItems = events.map((event: {hash:string,event:{from:string,to:string,num:number}}) => <li key={event.hash}>
-	  {event.event.from} {event.event.to} {event.event.num}</li>);
+  if (!events) {
+    return <div></div>;
+  }
+
+  const listItems = events.map(
+    (event: {
+      hash: string;
+      event: { from: string; to: string; num: number };
+    }) => (
+      <li key={event.hash}>
+        {event.event.from} {event.event.to} {event.event.num}
+      </li>
+    )
+  );
   return (
     <div>
       <p>Total: {events.length}</p>

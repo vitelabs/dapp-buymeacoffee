@@ -8,9 +8,8 @@ import coffeeABI from "./contract/coffee_abi.json";
 import coffeeContract from "./contract/coffee_contract.json";
 import { BuyCoffeeRecords } from "./BuyCoffeeRecords";
 import { BuyCoffee } from "./BuyCoffee";
-import { UserInfo,User} from "./UserInfo";
+import { UserInfo, User } from "./UserInfo";
 const { HTTP_RPC } = require("@vite/vitejs-http");
-
 
 type AppProps = {};
 
