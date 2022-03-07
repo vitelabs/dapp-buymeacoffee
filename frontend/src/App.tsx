@@ -89,6 +89,10 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   buy = async (name: string, num: number) => {
+    if (!this.beneficiaryAddress) {
+      alert("Please confirm beneficiary Address");
+      return;
+    }
     console.log(name, num);
 
     const methodName = "buyCoffee";
