@@ -18,7 +18,7 @@ export function BuyCoffeeRecords(props: { contract: RecordsProps }) {
     const address = props.contract.address;
 
     (async () => {
-      const es = await await scanEvents(
+      const es = await scanEvents(
         provider,
         contractAbi,
         address,
