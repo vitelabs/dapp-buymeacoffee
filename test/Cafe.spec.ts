@@ -11,7 +11,7 @@ describe("test Cafe", () => {
     provider = vuilder.newProvider(config.networks.local.http);
     console.log(await provider.request("ledger_getSnapshotChainHeight"));
     deployer = vuilder.newAccount(config.networks.local.mnemonic, 0, provider);
-    console.log('deployer', deployer.address);
+    console.log("deployer", deployer.address);
   });
 
   it("test buy coffee", async () => {
@@ -27,14 +27,11 @@ describe("test Cafe", () => {
     console.log(cafe.address);
 
     // check default balance
-    expect(await cafe.balance()).to.be.equal('0');
+    expect(await cafe.balance()).to.be.equal("0");
     // check default value of data
-    let result = await cafe.query("price", []);
-    console.log("return", result);
-    expect(result)
-      .to.be.an("array")
-      .with.lengthOf(1);
-    expect(result![0]).to.be.equal("1000000000000000000");
+    expect(await cafe.query("price", [])).to.be.deep.equal([
+      "1000000000000000000",
+    ]);
 
     // call Cafe.buyCoffee(to, numOfCups);
     const block = await cafe.call(
@@ -44,16 +41,21 @@ describe("test Cafe", () => {
     );
 
     // console.log(block);
-    const events = await cafe.getPastEvents('Buy', {fromHeight: block.height, toHeight: block.height});
-    expect(events)
-      .to.be.an("array")
-      .with.lengthOf(1);
-    expect(events[0]?.returnValues?.from).to.be.equal(deployer.address);
-    expect(events[0]?.returnValues?.to).to.be.equal(
-      "vite_3345524abf6bbe1809449224b5972c41790b6cf2e22fcb5caf"
-    );
-    expect(events[0]?.returnValues?.num).to.be.equal("2");
+    const events = await cafe.getPastEvents("Buy", {
+      fromHeight: block.height,
+      toHeight: block.height,
+    });
+    expect(events.map((event: any) => event.returnValues)).to.be.deep.equal([
+      {
+        "0": "vite_61214664a1081e286152011570993a701735f5c2c12198ce63",
+        "1": "vite_3345524abf6bbe1809449224b5972c41790b6cf2e22fcb5caf",
+        "2": "2",
+        from: "vite_61214664a1081e286152011570993a701735f5c2c12198ce63",
+        to: "vite_3345524abf6bbe1809449224b5972c41790b6cf2e22fcb5caf",
+        num: "2",
+      },
+    ]);
 
-    expect(await cafe.balance()).to.be.equal('0');
+    expect(await cafe.balance()).to.be.equal("0");
   });
 });
