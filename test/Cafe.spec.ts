@@ -1,10 +1,10 @@
 // import { describe } from "mocha";
 import { expect } from "chai";
-const vuilder = require("@vite/vuilder");
+import * as vuilder from "@vite/vuilder";
 import config from "./vite.config.json";
 
 let provider: any;
-let deployer: any;
+let deployer: vuilder.UserAccount;
 
 describe("test Cafe", () => {
   before(async function() {
